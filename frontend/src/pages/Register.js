@@ -9,25 +9,20 @@ function Register() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleRegister = async () => {
         try {
-            const response = await axios.post("http://localhost:5000/api/users/login", {
+            const response = await axios.post("http://localhost:5000/api/users/register", {
+                name,
                 email,
                 password
             });
-    
-            if (!response.data.token) {
-                throw new Error("Error en autenticación: Token no recibido");
-            }
-    
-            console.log("Token recibido:", response.data.token);
-            localStorage.setItem("token", response.data.token);
-            navigate("/dashboard");
+
+            alert("Registro exitoso. Ahora puedes iniciar sesión.");
+            navigate("/login"); // Redirigir a login después del registro exitoso
         } catch (error) {
-            alert("Error en inicio de sesión: " + (error.response?.data?.message || error.message));
+            alert("Error en registro: " + (error.response?.data?.message || error.message));
         }
     };
-    
 
     return (
         <div className="register-container">

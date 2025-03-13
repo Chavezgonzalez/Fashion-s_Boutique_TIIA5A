@@ -2,16 +2,21 @@ import { useState } from "react";
 import axios from "axios";
 import './login.css'; 
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
             const res = await axios.post("http://localhost:5000/api/users/login", { email, password });
             localStorage.setItem("token", res.data.token);
             alert("Inicio de sesión exitoso");
+
+            // Redirigir a Home después del login
+            navigate("/");
         } catch (error) {
             alert("Error en login: " + error.response.data.message);
         }
